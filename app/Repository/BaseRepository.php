@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BaseRepository
 {
-    
     /**
      * @var Model
      */
@@ -29,6 +28,8 @@ class BaseRepository
     }
 
     /**
+     * Function to validate Attribute names
+     * 
      * @return array
      */
     public function validatorAttributeNames()
@@ -37,6 +38,8 @@ class BaseRepository
     }
 
     /**
+     * Function to get a specific model
+     * 
      * @return Model
      */
     public function getModel()
@@ -45,6 +48,8 @@ class BaseRepository
     }
 
     /**
+     * Function to get all model data
+     * 
      * @return \Illuminate\Database\Eloquent\Collection|Model[]
      */
     public function all()
@@ -53,6 +58,8 @@ class BaseRepository
     }
 
     /**
+     * Function to get a specidied model resource
+     * 
      * @param integer $id
      * @return Model|null
      */
@@ -61,6 +68,12 @@ class BaseRepository
         return $this->model->find($id);
     }
 
+    /**
+     * Function to get a model with it's associated relations
+     * 
+     * @param array $array
+     * @return \Illuminate\Database\Eloquent\Collection|Model[]
+     */
     public function with($array)
     {
         return $this->model->with($array);
@@ -68,6 +81,8 @@ class BaseRepository
 
     /**
      * @param integer $id
+     * Function to get a specified model resource or throws an exception
+     * 
      * @return Model
      * @throws ModelNotFoundException
      */
@@ -77,18 +92,20 @@ class BaseRepository
     }
 
     /**
+     * Function to get a specified model by a slug
+     * 
      * @param string $slug
      * @return Model
      * @throws ModelNotFoundException
      */
     public function findBySlug($slug)
     {
-
         return $this->model->where('slug', $slug)->first();
-
     }
 
     /**
+     * Function to perform a specific query on a model
+     * 
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query()
@@ -97,6 +114,8 @@ class BaseRepository
     }
 
     /**
+     * Function to get all model attributes
+     * 
      * @param array $attributes
      * @return Model
      */
@@ -107,6 +126,8 @@ class BaseRepository
     }
 
     /**
+     * Function to perform pagination on a model
+     * 
      * @param int|null $perPage
      * @return mixed
      */
@@ -115,12 +136,21 @@ class BaseRepository
         return $this->model->paginate($perPage);
     }
 
+     /**
+     * Function to query a model where a specified conndition is met
+     * 
+     * @param int|null $key
+     * @param string $where
+     * @return mixed
+     */
     public function where($key, $where)
     {
         return $this->model->where($key, $where);
     }
 
     /**
+     * Function to validate request parameters
+     * 
      * @param array $data
      * @param null $rules
      * @param array $messages
@@ -147,6 +177,7 @@ class BaseRepository
     public function validate(array $data = [], $rules = null, array $messages = [], array $customAttributes = [])
     {
         $validator = $this->validator($data, $rules, $messages, $customAttributes);
+        
         return $this->_validate($validator);
     }
 
@@ -160,6 +191,8 @@ class BaseRepository
     }
 
     /**
+     * Function to update a specified model resource
+     * 
      * @param integer $id
      * @param array $data
      * @return Model
@@ -172,6 +205,8 @@ class BaseRepository
     }
 
     /**
+     * Function to delete a specified model resource
+     * 
      * @param integer $id
      * @return Model
      * @throws \Exception
